@@ -22,7 +22,7 @@ if (
         header("Location: signup.php?error=Password is required&$user_data");
         exit();
     } elseif (empty($re_pass)) {
-        header("Location: signup.php?error=Re Password is required&$user_data");
+        header("Location: signup.php?error=Confirm Password is required&$user_data");
         exit();
     } elseif (empty($name)) {
         header("Location: signup.php?error=Name is required&$user_data");
