@@ -2,6 +2,7 @@
 $page_title = "Login - Jean Library Management";
 $body_class = "centered";
 include "includes/header.php";
+include "includes/functions.php";
 ?>
 <form action="login.php" method="post">
     <h2>🔐 Welcome Back</h2>

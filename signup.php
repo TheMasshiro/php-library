@@ -2,6 +2,7 @@
 $page_title = "Sign Up - Jean Library Management";
 $body_class = "centered";
 include "includes/header.php";
+include "includes/functions.php";
 ?>
 <form action="signup-check.php" method="post">
     <h2>✨ Create Account</h2>

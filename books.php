@@ -2,6 +2,7 @@
 session_start();
 include "includes/auth.php";
 include "db_conn.php";
+include "includes/functions.php";
 
 $page_title = "Books Management";
 $books = [];
