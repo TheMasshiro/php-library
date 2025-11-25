@@ -7,7 +7,7 @@ define('DB_NAME', 'main_db');
 
 // Application settings
 define('APP_NAME', 'JLibrary Management');
-define('APP_VERSION', '2.0');
+define('APP_VERSION', '1.0');
 
 // Session configuration
 ini_set('session.cookie_httponly', 1);
