@@ -34,7 +34,7 @@ include "includes/navbar.php";
 
 
 <div class="content-wrapper">
-    <form action="edit-book.php?id=<?php echo $id; ?>" method="post" class="book-form">
+    <form action="edit-book.php?id=<?php echo $id; ?>" method="post" class="book-form book-form-card">
         <div class="form-header">
             <h2>✏️ Edit Book</h2>
             <p class="form-subtitle">Update the book information</p>

@@ -23,7 +23,7 @@ include "includes/navbar.php";
 ?>
 
 <div class="content-wrapper">
-    <form action="add-book.php" method="post" class="book-form">
+    <form action="add-book.php" method="post" class="book-form book-form-card">
         <div class="form-header">
             <h2>➕ Add New Book</h2>
             <p class="form-subtitle">Fill in the details to add a book to your library</p>
