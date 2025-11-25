@@ -5,19 +5,7 @@ include "includes/header.php";
 ?>
 <form action="login.php" method="post">
     <h2>🔐 Welcome Back</h2>
-    <?php if (isset($_GET['error'])) { ?>
-        <div class="alert alert-error">
-            <span class="alert-icon">✕</span>
-            <?php echo htmlspecialchars($_GET['error']); ?>
-        </div>
-    <?php } ?>
-    
-    <?php if (isset($_GET['success'])) { ?>
-        <div class="alert alert-success">
-            <span class="alert-icon">✓</span>
-            <?php echo htmlspecialchars($_GET['success']); ?>
-        </div>
-    <?php } ?>
+    <?php render_alerts(); ?>
     
     <label>User Name</label>
     <input type="text" name="uname" placeholder="Enter your username" required autofocus>

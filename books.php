@@ -23,12 +23,7 @@ include "includes/navbar.php";
         </div>
     </div>
 
-    <?php if (isset($_GET['success'])) { ?>
-        <div class="alert alert-success">
-            <span class="alert-icon">✓</span>
-            <?php echo htmlspecialchars($_GET['success']); ?>
-        </div>
-    <?php } ?>
+    <?php render_alerts(); ?>
 
     <?php if (count($books) > 0) { ?>
         <table>

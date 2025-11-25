@@ -3,67 +3,33 @@ session_start();
 include "db_conn.php";
 include "includes/functions.php";
 
-if (
-    isset($_POST['uname']) && isset($_POST['password'])
-    && isset($_POST['name']) && isset($_POST['re_password'])
-) {
+if (!isset($_POST['uname'], $_POST['password'], $_POST['name'], $_POST['re_password'])) redirect('signup.php');
 
-    $uname = validate_input($_POST['uname']);
-    $pass = validate_input($_POST['password']);
-    $re_pass = validate_input($_POST['re_password']);
-    $name = validate_input($_POST['name']);
+$uname = validate_input($_POST['uname']);
+$pass = validate_input($_POST['password']);
+$re_pass = validate_input($_POST['re_password']);
+$name = validate_input($_POST['name']);
+$user_data = ['uname' => $uname, 'name' => $name];
 
-    $user_data = 'uname=' . urlencode($uname) . '&name=' . urlencode($name);
+if (empty($uname)) redirect('signup.php', 'User Name is required', 'error', $user_data);
+if (empty($pass)) redirect('signup.php', 'Password is required', 'error', $user_data);
+if (empty($re_pass)) redirect('signup.php', 'Confirm Password is required', 'error', $user_data);
+if (empty($name)) redirect('signup.php', 'Name is required', 'error', $user_data);
+if ($pass !== $re_pass) redirect('signup.php', 'The confirmation password does not match', 'error', $user_data);
+if (strlen($pass) < 6) redirect('signup.php', 'Password must be at least 6 characters', 'error', $user_data);
 
-    if (empty($uname)) {
-        header("Location: signup.php?error=User Name is required&$user_data");
-        exit();
-    } elseif (empty($pass)) {
-        header("Location: signup.php?error=Password is required&$user_data");
-        exit();
-    } elseif (empty($re_pass)) {
-        header("Location: signup.php?error=Confirm Password is required&$user_data");
-        exit();
-    } elseif (empty($name)) {
-        header("Location: signup.php?error=Name is required&$user_data");
-        exit();
-    } elseif ($pass !== $re_pass) {
-        header("Location: signup.php?error=The confirmation password does not match&$user_data");
-        exit();
-    } elseif (strlen($pass) < 6) {
-        header("Location: signup.php?error=Password must be at least 6 characters&$user_data");
-        exit();
-    } else {
-        $sql = "SELECT * FROM users WHERE user_name=?";
-        $stmt = mysqli_prepare($conn, $sql);
-        mysqli_stmt_bind_param($stmt, "s", $uname);
-        mysqli_stmt_execute($stmt);
-        $result = mysqli_stmt_get_result($stmt);
-
-        if (mysqli_num_rows($result) > 0) {
-            mysqli_stmt_close($stmt);
-            header("Location: signup.php?error=The username is taken, try another&$user_data");
-            exit();
-        } else {
-            mysqli_stmt_close($stmt);
-            
-            $hashed_pass = password_hash($pass, PASSWORD_DEFAULT);
-            $sql2 = "INSERT INTO users(user_name, password, name) VALUES(?, ?, ?)";
-            $stmt2 = mysqli_prepare($conn, $sql2);
-            mysqli_stmt_bind_param($stmt2, "sss", $uname, $hashed_pass, $name);
-            
-            if (mysqli_stmt_execute($stmt2)) {
-                mysqli_stmt_close($stmt2);
-                header("Location: index.php?success=Your account has been created successfully! Please login.");
-                exit();
-            } else {
-                mysqli_stmt_close($stmt2);
-                header("Location: signup.php?error=Unknown error occurred&$user_data");
-                exit();
-            }
-        }
-    }
-} else {
-    header("Location: signup.php");
-    exit();
+$stmt = mysqli_prepare($conn, "SELECT * FROM users WHERE user_name=?");
+mysqli_stmt_bind_param($stmt, "s", $uname);
+mysqli_stmt_execute($stmt);
+if (mysqli_num_rows(mysqli_stmt_get_result($stmt)) > 0) {
+    mysqli_stmt_close($stmt);
+    redirect('signup.php', 'The username is taken, try another', 'error', $user_data);
 }
+mysqli_stmt_close($stmt);
+
+$stmt = mysqli_prepare($conn, "INSERT INTO users(user_name, password, name) VALUES(?, ?, ?)");
+mysqli_stmt_bind_param($stmt, "sss", $uname, password_hash($pass, PASSWORD_DEFAULT), $name);
+mysqli_stmt_execute($stmt) 
+    ? redirect('index.php', 'Your account has been created successfully! Please login.', 'success')
+    : redirect('signup.php', 'Unknown error occurred', 'error', $user_data);
+mysqli_stmt_close($stmt);

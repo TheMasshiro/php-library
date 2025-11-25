@@ -6,26 +6,15 @@ include "includes/functions.php";
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $book_data = sanitize_book_data($conn, $_POST);
+    if (empty($book_data['title']) || empty($book_data['author'])) redirect('add-book.php', 'Title and Author are required');
 
-    if (empty($book_data['title']) || empty($book_data['author'])) {
-        header("Location: add-book.php?error=Title and Author are required");
-        exit();
-    }
-
-    $sql = "INSERT INTO books (title, author, isbn, published_year, quantity, description) VALUES (?, ?, ?, ?, ?, ?)";
-    $stmt = mysqli_prepare($conn, $sql);
+    $stmt = mysqli_prepare($conn, "INSERT INTO books (title, author, isbn, published_year, quantity, description) VALUES (?, ?, ?, ?, ?, ?)");
     mysqli_stmt_bind_param($stmt, "ssssis", $book_data['title'], $book_data['author'], $book_data['isbn'], 
                            $book_data['published_year'], $book_data['quantity'], $book_data['description']);
-    
-    if (mysqli_stmt_execute($stmt)) {
-        mysqli_stmt_close($stmt);
-        header("Location: books.php?success=Book added successfully");
-        exit();
-    } else {
-        mysqli_stmt_close($stmt);
-        header("Location: add-book.php?error=Failed to add book");
-        exit();
-    }
+    mysqli_stmt_execute($stmt) 
+        ? redirect('books.php', 'Book added successfully', 'success')
+        : redirect('add-book.php', 'Failed to add book');
+    mysqli_stmt_close($stmt);
 }
 
 $page_title = "Add Book";
@@ -41,9 +30,7 @@ include "includes/navbar.php";
             <p class="form-subtitle">Fill in the details to add a book to your library</p>
         </div>
         
-        <?php if (isset($_GET['error'])) {
-            show_alert($_GET['error'], 'error');
-        } ?>
+        <?php render_alerts(); ?>
 
         <div class="form-grid">
             <div class="form-group full-width">

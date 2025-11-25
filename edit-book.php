@@ -4,49 +4,27 @@ include "includes/auth.php";
 include "db_conn.php";
 include "includes/functions.php";
 
-if (!isset($_GET['id'])) {
-    header("Location: books.php");
-    exit();
-}
-
+if (!isset($_GET['id'])) redirect('books.php');
 $id = intval($_GET['id']);
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $book_data = sanitize_book_data($conn, $_POST);
+    if (empty($book_data['title']) || empty($book_data['author'])) redirect("edit-book.php?id=$id", 'Title and Author are required');
 
-    if (empty($book_data['title']) || empty($book_data['author'])) {
-        header("Location: edit-book.php?id=$id&error=Title and Author are required");
-        exit();
-    }
-
-    $sql = "UPDATE books SET title=?, author=?, isbn=?, published_year=?, quantity=?, description=? WHERE id=?";
-    $stmt = mysqli_prepare($conn, $sql);
+    $stmt = mysqli_prepare($conn, "UPDATE books SET title=?, author=?, isbn=?, published_year=?, quantity=?, description=? WHERE id=?");
     mysqli_stmt_bind_param($stmt, "ssssisi", $book_data['title'], $book_data['author'], $book_data['isbn'], 
                            $book_data['published_year'], $book_data['quantity'], $book_data['description'], $id);
-    
-    if (mysqli_stmt_execute($stmt)) {
-        mysqli_stmt_close($stmt);
-        header("Location: books.php?success=Book updated successfully");
-        exit();
-    } else {
-        mysqli_stmt_close($stmt);
-        header("Location: edit-book.php?id=$id&error=Failed to update book");
-        exit();
-    }
+    mysqli_stmt_execute($stmt) 
+        ? redirect('books.php', 'Book updated successfully', 'success')
+        : redirect("edit-book.php?id=$id", 'Failed to update book');
+    mysqli_stmt_close($stmt);
 }
 
-$sql = "SELECT * FROM books WHERE id=?";
-$stmt = mysqli_prepare($conn, $sql);
+$stmt = mysqli_prepare($conn, "SELECT * FROM books WHERE id=?");
 mysqli_stmt_bind_param($stmt, "i", $id);
 mysqli_stmt_execute($stmt);
 $result = mysqli_stmt_get_result($stmt);
-
-if (mysqli_num_rows($result) !== 1) {
-    mysqli_stmt_close($stmt);
-    header("Location: books.php?error=Book not found");
-    exit();
-}
-
+if (mysqli_num_rows($result) !== 1) redirect('books.php', 'Book not found');
 $book = mysqli_fetch_assoc($result);
 mysqli_stmt_close($stmt);
 $page_title = "Edit Book";
@@ -63,9 +41,7 @@ include "includes/navbar.php";
             <p class="form-subtitle">Update the book information</p>
         </div>
         
-        <?php if (isset($_GET['error'])) {
-            show_alert($_GET['error'], 'error');
-        } ?>
+        <?php render_alerts(); ?>
 
         <div class="form-grid">
             <div class="form-group full-width">
