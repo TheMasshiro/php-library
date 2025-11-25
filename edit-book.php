@@ -55,52 +55,55 @@ include "includes/header.php";
 include "includes/navbar.php";
 ?>
 
-<form action="edit-book.php?id=<?php echo $id; ?>" method="post" class="book-form">
-    <div class="form-header">
-        <h2>✏️ Edit Book</h2>
-        <p class="form-subtitle">Update the book information</p>
-    </div>
-    
-    <?php if (isset($_GET['error'])) {
-        show_alert($_GET['error'], 'error');
-    } ?>
 
-    <div class="form-grid">
-        <div class="form-group full-width">
-            <label>Book Title *</label>
-            <input type="text" name="title" placeholder="Enter book title" value="<?php echo htmlspecialchars($book['title']); ?>" required autofocus>
+<div class="content-wrapper">
+    <form action="edit-book.php?id=<?php echo $id; ?>" method="post" class="book-form">
+        <div class="form-header">
+            <h2>✏️ Edit Book</h2>
+            <p class="form-subtitle">Update the book information</p>
+        </div>
+        
+        <?php if (isset($_GET['error'])) {
+            show_alert($_GET['error'], 'error');
+        } ?>
+
+        <div class="form-grid">
+            <div class="form-group full-width">
+                <label>Book Title *</label>
+                <input type="text" name="title" placeholder="Enter book title" value="<?php echo htmlspecialchars($book['title']); ?>" required autofocus>
+            </div>
+
+            <div class="form-group">
+                <label>Author *</label>
+                <input type="text" name="author" placeholder="Author name" value="<?php echo htmlspecialchars($book['author']); ?>" required>
+            </div>
+
+            <div class="form-group">
+                <label>ISBN</label>
+                <input type="text" name="isbn" placeholder="ISBN number" value="<?php echo htmlspecialchars($book['isbn'] ?? ''); ?>">
+            </div>
+
+            <div class="form-group">
+                <label>Published Year</label>
+                <input type="number" name="published_year" placeholder="2024" min="1000" max="2100" value="<?php echo $book['published_year'] ?? ''; ?>">
+            </div>
+
+            <div class="form-group">
+                <label>Quantity *</label>
+                <input type="number" name="quantity" placeholder="1" value="<?php echo $book['quantity']; ?>" min="1" required>
+            </div>
+
+            <div class="form-group full-width">
+                <label>Description (Optional)</label>
+                <textarea name="description" placeholder="Brief description of the book..." rows="4"><?php echo htmlspecialchars($book['description'] ?? ''); ?></textarea>
+            </div>
         </div>
 
-        <div class="form-group">
-            <label>Author *</label>
-            <input type="text" name="author" placeholder="Author name" value="<?php echo htmlspecialchars($book['author']); ?>" required>
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">✓ Update Book</button>
+            <a href="books.php" class="btn btn-secondary">✕ Cancel</a>
         </div>
-
-        <div class="form-group">
-            <label>ISBN</label>
-            <input type="text" name="isbn" placeholder="ISBN number" value="<?php echo htmlspecialchars($book['isbn'] ?? ''); ?>">
-        </div>
-
-        <div class="form-group">
-            <label>Published Year</label>
-            <input type="number" name="published_year" placeholder="2024" min="1000" max="2100" value="<?php echo $book['published_year'] ?? ''; ?>">
-        </div>
-
-        <div class="form-group">
-            <label>Quantity *</label>
-            <input type="number" name="quantity" placeholder="1" value="<?php echo $book['quantity']; ?>" min="1" required>
-        </div>
-
-        <div class="form-group full-width">
-            <label>Description (Optional)</label>
-            <textarea name="description" placeholder="Brief description of the book..." rows="4"><?php echo htmlspecialchars($book['description'] ?? ''); ?></textarea>
-        </div>
-    </div>
-
-    <div class="form-actions">
-        <button type="submit" class="btn btn-primary">✓ Update Book</button>
-        <a href="books.php" class="btn btn-secondary">✕ Cancel</a>
-    </div>
-</form>
+    </form>
+</div>
 
 <?php include "includes/footer.php"; ?>
