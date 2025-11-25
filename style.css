@@ -45,7 +45,7 @@ body.centered .navbar {
 }
 
 body.centered .content-wrapper {
-  padding: 40px 20px;
+  padding: 60px 20px 40px;
 }
 
 .content-wrapper {
@@ -551,7 +551,7 @@ td {
 }
 
 th {
-  background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+  background: transparent;
   color: white;
   font-weight: 700;
   text-transform: uppercase;
@@ -559,7 +559,6 @@ th {
   letter-spacing: 1.2px;
   position: relative;
   padding: 20px 18px;
-  box-shadow: 0 2px 8px rgba(255, 154, 158, 0.2);
   border-right: 1px solid rgba(255, 255, 255, 0.2);
 }
 
@@ -578,7 +577,8 @@ th::after {
 }
 
 thead {
-  background: transparent;
+  background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+  box-shadow: 0 2px 8px rgba(255, 154, 158, 0.2);
 }
 
 tbody tr {
