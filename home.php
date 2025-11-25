@@ -2,7 +2,6 @@
 session_start();
 include "includes/auth.php";
 include "db_conn.php";
-include "includes/functions.php";
 
 $page_title = "Library Dashboard";
 $stats = get_book_stats($conn);

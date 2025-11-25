@@ -2,7 +2,6 @@
 session_start();
 include "includes/auth.php";
 include "db_conn.php";
-include "includes/functions.php";
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $book_data = sanitize_book_data($conn, $_POST);

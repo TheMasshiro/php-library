@@ -2,7 +2,6 @@
 session_start();
 include "includes/auth.php";
 include "db_conn.php";
-include "includes/functions.php";
 
 if (!isset($_GET['id'])) redirect('books.php');
 $id = intval($_GET['id']);
