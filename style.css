@@ -51,11 +51,11 @@ body.centered .navbar ~ * {
 }
 
 body.centered .navbar {
-  margin-top: 0;
+  margin-top: -40px;
 }
 
 body.centered .content-wrapper {
-  padding: 60px 20px 40px;
+  padding: 100px 20px 40px;
 }
 
 .content-wrapper {
