@@ -7,8 +7,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $book_data = sanitize_book_data($conn, $_POST);
     if (empty($book_data['title']) || empty($book_data['author'])) redirect('add-book.php', 'Title and Author are required');
 
-    $stmt = mysqli_prepare($conn, "INSERT INTO books (title, author, isbn, published_year, quantity, description) VALUES (?, ?, ?, ?, ?, ?)");
-    mysqli_stmt_bind_param($stmt, "ssssis", $book_data['title'], $book_data['author'], $book_data['isbn'], 
+    $user_id = $_SESSION['id'];
+    $stmt = mysqli_prepare($conn, "INSERT INTO books (user_id, title, author, isbn, published_year, quantity, description) VALUES (?, ?, ?, ?, ?, ?, ?)");
+    mysqli_stmt_bind_param($stmt, "issssis", $user_id, $book_data['title'], $book_data['author'], $book_data['isbn'], 
                            $book_data['published_year'], $book_data['quantity'], $book_data['description']);
     mysqli_stmt_execute($stmt) 
         ? redirect('books.php', 'Book added successfully', 'success')

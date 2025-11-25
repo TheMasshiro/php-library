@@ -15,7 +15,7 @@ include "includes/functions.php";
            value="<?php echo isset($_GET['name']) ? htmlspecialchars($_GET['name']) : ''; ?>"
            required autofocus>
 
-    <label>User Name</label>
+    <label>Username</label>
     <input type="text"
            name="uname"
            placeholder="Choose a username"

@@ -5,11 +5,15 @@ include "db_conn.php";
 
 $page_title = "Books Management";
 $books = [];
-$sql = "SELECT * FROM books ORDER BY id DESC";
-$result = mysqli_query($conn, $sql);
+$user_id = $_SESSION['id'];
+$stmt = mysqli_prepare($conn, "SELECT * FROM books WHERE user_id=? ORDER BY id DESC");
+mysqli_stmt_bind_param($stmt, "i", $user_id);
+mysqli_stmt_execute($stmt);
+$result = mysqli_stmt_get_result($stmt);
 if ($result) {
     $books = mysqli_fetch_all($result, MYSQLI_ASSOC);
 }
+mysqli_stmt_close($stmt);
 
 include "includes/header.php";
 include "includes/navbar.php";

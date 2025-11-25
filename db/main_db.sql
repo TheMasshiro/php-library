@@ -8,6 +8,7 @@ CREATE TABLE `users` (
 
 CREATE TABLE IF NOT EXISTS `books` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
   `title` varchar(255) NOT NULL,
   `author` varchar(255) NOT NULL,
   `isbn` varchar(50) DEFAULT NULL,
@@ -15,5 +16,7 @@ CREATE TABLE IF NOT EXISTS `books` (
   `quantity` int(11) DEFAULT 1,
   `description` text DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`),
+  CONSTRAINT `books_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;

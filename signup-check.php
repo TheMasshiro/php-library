@@ -11,7 +11,7 @@ $re_pass = validate_input($_POST['re_password']);
 $name = validate_input($_POST['name']);
 $user_data = ['uname' => $uname, 'name' => $name];
 
-if (empty($uname)) redirect('signup.php', 'User Name is required', 'error', $user_data);
+if (empty($uname)) redirect('signup.php', 'Username is required', 'error', $user_data);
 if (empty($pass)) redirect('signup.php', 'Password is required', 'error', $user_data);
 if (empty($re_pass)) redirect('signup.php', 'Confirm Password is required', 'error', $user_data);
 if (empty($name)) redirect('signup.php', 'Name is required', 'error', $user_data);

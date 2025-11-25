@@ -8,7 +8,7 @@ include "includes/functions.php";
     <h2>🔐 Welcome Back</h2>
     <?php render_alerts(); ?>
     
-    <label>User Name</label>
+    <label>Username</label>
     <input type="text" name="uname" placeholder="Enter your username" required autofocus>
 
     <label>Password</label>

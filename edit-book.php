@@ -6,21 +6,23 @@ include "db_conn.php";
 if (!isset($_GET['id'])) redirect('books.php');
 $id = intval($_GET['id']);
 
+$user_id = $_SESSION['id'];
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $book_data = sanitize_book_data($conn, $_POST);
     if (empty($book_data['title']) || empty($book_data['author'])) redirect("edit-book.php?id=$id", 'Title and Author are required');
 
-    $stmt = mysqli_prepare($conn, "UPDATE books SET title=?, author=?, isbn=?, published_year=?, quantity=?, description=? WHERE id=?");
-    mysqli_stmt_bind_param($stmt, "ssssisi", $book_data['title'], $book_data['author'], $book_data['isbn'], 
-                           $book_data['published_year'], $book_data['quantity'], $book_data['description'], $id);
+    $stmt = mysqli_prepare($conn, "UPDATE books SET title=?, author=?, isbn=?, published_year=?, quantity=?, description=? WHERE id=? AND user_id=?");
+    mysqli_stmt_bind_param($stmt, "ssssisii", $book_data['title'], $book_data['author'], $book_data['isbn'], 
+                           $book_data['published_year'], $book_data['quantity'], $book_data['description'], $id, $user_id);
     mysqli_stmt_execute($stmt) 
         ? redirect('books.php', 'Book updated successfully', 'success')
         : redirect("edit-book.php?id=$id", 'Failed to update book');
     mysqli_stmt_close($stmt);
 }
 
-$stmt = mysqli_prepare($conn, "SELECT * FROM books WHERE id=?");
-mysqli_stmt_bind_param($stmt, "i", $id);
+$stmt = mysqli_prepare($conn, "SELECT * FROM books WHERE id=? AND user_id=?");
+mysqli_stmt_bind_param($stmt, "ii", $id, $user_id);
 mysqli_stmt_execute($stmt);
 $result = mysqli_stmt_get_result($stmt);
 if (mysqli_num_rows($result) !== 1) redirect('books.php', 'Book not found');

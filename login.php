@@ -8,7 +8,7 @@ if (!isset($_POST['uname'], $_POST['password'])) redirect('index.php');
 $uname = validate_input($_POST['uname']);
 $pass = validate_input($_POST['password']);
 
-if (empty($uname)) redirect('index.php', 'User Name is required');
+if (empty($uname)) redirect('index.php', 'Username is required');
 if (empty($pass)) redirect('index.php', 'Password is required');
 
 $stmt = mysqli_prepare($conn, "SELECT * FROM users WHERE user_name=?");
