@@ -28,7 +28,7 @@ body.centered {
 
 form {
   width: 100%;
-  max-width: 1200px;
+  max-width: 450px;
   background: #fff;
   padding: 40px;
   border-radius: 20px;
@@ -167,7 +167,7 @@ h1 {
 }
 
 .nav-container {
-  max-width: 1200px;
+  max-width: 450px;
   margin: 0 auto;
   padding: 0 20px;
   display: flex;
