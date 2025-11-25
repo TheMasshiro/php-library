@@ -28,7 +28,7 @@ body.centered {
 
 form {
   width: 100%;
-  max-width: 450px;
+  max-width: 1200px;
   background: #fff;
   padding: 40px;
   border-radius: 20px;
@@ -700,4 +700,3 @@ td {
     font-size: 32px;
   }
 }
-
