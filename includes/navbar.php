@@ -1,6 +1,6 @@
 <nav class="navbar">
     <div class="nav-container">
-        <a href="home.php" class="nav-brand">📚 Library System</a>
+        <a href="home.php" class="nav-brand">📚 Jean Library Management</a>
         <div class="nav-menu">
             <a href="home.php" class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'home.php' ? 'active' : ''; ?>">
                 <span class="nav-icon">🏠</span>Home

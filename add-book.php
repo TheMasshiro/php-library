@@ -29,6 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 
 $page_title = "Add Book";
+$body_class = "centered";
 include "includes/header.php";
 include "includes/navbar.php";
 ?>

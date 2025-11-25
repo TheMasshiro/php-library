@@ -50,6 +50,7 @@ if (mysqli_num_rows($result) !== 1) {
 $book = mysqli_fetch_assoc($result);
 mysqli_stmt_close($stmt);
 $page_title = "Edit Book";
+$body_class = "centered";
 include "includes/header.php";
 include "includes/navbar.php";
 ?>
