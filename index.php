@@ -1,5 +1,6 @@
 <?php
-$page_title = "Login - JLibrary Management";
+$page_title = "Login - Jean Library Management";
+$body_class = "centered";
 include "includes/header.php";
 ?>
 <form action="login.php" method="post">

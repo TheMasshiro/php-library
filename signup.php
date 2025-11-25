@@ -1,5 +1,6 @@
 <?php
-$page_title = "Sign Up - JLibrary Management";
+$page_title = "Sign Up - Jean Library Management";
+$body_class = "centered";
 include "includes/header.php";
 ?>
 <form action="signup-check.php" method="post">

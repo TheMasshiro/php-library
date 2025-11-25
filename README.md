@@ -1,4 +1,4 @@
-# JLibrary Management
+# Jean Library Management
 
 A modern, responsive library management application built with PHP and MySQL.
 

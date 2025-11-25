@@ -14,7 +14,7 @@ include "includes/navbar.php";
 <div class="home-container">
     <div class="welcome-section">
         <h1>Hello, <?php echo htmlspecialchars($_SESSION['name']); ?>! 👋</h1>
-        <p>Welcome to your JLibrary Management</p>
+        <p>Welcome to your Jean Library Management</p>
     </div>
     
     <div class="stats-grid">
