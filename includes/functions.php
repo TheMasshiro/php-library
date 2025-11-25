@@ -23,17 +23,29 @@ function render_alerts() {
 
 function get_book_stats($conn) {
     $stats = ['total_books' => 0, 'total_copies' => 0, 'recent_books' => 0];
-    $queries = [
-        'total_books' => "SELECT COUNT(*) as val FROM books",
-        'total_copies' => "SELECT SUM(quantity) as val FROM books",
-        'recent_books' => "SELECT COUNT(*) as val FROM books WHERE created_at >= DATE_SUB(NOW(), INTERVAL 7 DAY)"
-    ];
-    foreach ($queries as $key => $sql) {
-        if ($result = mysqli_query($conn, $sql)) {
-            $stats[$key] = mysqli_fetch_assoc($result)['val'] ?? 0;
-            mysqli_free_result($result);
-        }
-    }
+    $user_id = $_SESSION['id'];
+    
+    $stmt = mysqli_prepare($conn, "SELECT COUNT(*) as val FROM books WHERE user_id=?");
+    mysqli_stmt_bind_param($stmt, "i", $user_id);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    $stats['total_books'] = mysqli_fetch_assoc($result)['val'] ?? 0;
+    mysqli_stmt_close($stmt);
+    
+    $stmt = mysqli_prepare($conn, "SELECT SUM(quantity) as val FROM books WHERE user_id=?");
+    mysqli_stmt_bind_param($stmt, "i", $user_id);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    $stats['total_copies'] = mysqli_fetch_assoc($result)['val'] ?? 0;
+    mysqli_stmt_close($stmt);
+    
+    $stmt = mysqli_prepare($conn, "SELECT COUNT(*) as val FROM books WHERE user_id=? AND created_at >= DATE_SUB(NOW(), INTERVAL 7 DAY)");
+    mysqli_stmt_bind_param($stmt, "i", $user_id);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    $stats['recent_books'] = mysqli_fetch_assoc($result)['val'] ?? 0;
+    mysqli_stmt_close($stmt);
+    
     return $stats;
 }
 
