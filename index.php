@@ -28,4 +28,3 @@ include "includes/header.php";
     <button type="submit">Login</button>
     <a href="signup.php" class="ca">Don't have an account? Sign up</a>
 </form>
-<?php include "includes/footer.php"; ?>

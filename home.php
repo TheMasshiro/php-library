@@ -54,5 +54,3 @@ include "includes/navbar.php";
         </a>
     </div>
 </div>
-
-<?php include "includes/footer.php"; ?>

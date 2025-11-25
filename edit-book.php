@@ -105,5 +105,3 @@ include "includes/navbar.php";
         </div>
     </form>
 </div>
-
-<?php include "includes/footer.php"; ?>

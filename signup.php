@@ -50,4 +50,3 @@ include "includes/header.php";
     <button type="submit">Sign Up</button>
     <a href="index.php" class="ca">Already have an account? Login</a>
 </form>
-<?php include "includes/footer.php"; ?>
